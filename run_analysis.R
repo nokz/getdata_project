@@ -26,14 +26,15 @@ names(subjectTrain)[1] <- "subject"
 names(y_test)[1] <- "activity"
 names(y_train)[1] <- "activity"
 
+# bind_rows removes duplicate column names :()
 
 # Combine test data together
-testData <- cbind(subjectTest, y_test)
-testData <- cbind(testData, x_test)
+testData <- bind_cols(subjectTest, y_test)
+testData <- bind_cols(testData, x_test)
 
 #Combine train data together
-trainData <- cbind(subjectTrain, y_train)
-trainData <- cbind(trainData, x_train)
+trainData <- bind_cols(subjectTrain, y_train)
+trainData <- bind_cols(trainData, x_train)
 
 # Merge together
-mergedData <- rbind(testData, trainData)
+mergedData <- bind_rows(testData, trainData)
