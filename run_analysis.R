@@ -1,6 +1,7 @@
 # getdata course project
 
 library(dplyr)
+library(reshape2)
 
 # Load the data
 activities <- read.table("UCI HAR Dataset/activity_labels.txt", header = FALSE, stringsAsFactors = FALSE)
@@ -16,7 +17,7 @@ subjectTrain <- read.table("UCI HAR Dataset/train/subject_train.txt", header = F
 x_train <- read.table("UCI HAR Dataset/train/X_train.txt", header = FALSE, stringsAsFactors = FALSE)
 y_train <- read.table("UCI HAR Dataset/train/y_train.txt", header = FALSE, stringsAsFactors = FALSE)
 
-#Add column names to X data frames
+#Add column names to data frames
 names(x_test) <- features$V2
 names(x_train) <- features$V2
 
@@ -26,7 +27,9 @@ names(subjectTrain)[1] <- "subject"
 names(y_test)[1] <- "activity"
 names(y_train)[1] <- "activity"
 
-# bind_rows removes duplicate column names :()
+names(activities) <- c("id", "activity")
+
+# bind_rows removes duplicate column names
 
 # Combine test data together
 testData <- bind_cols(subjectTest, y_test)
@@ -38,3 +41,19 @@ trainData <- bind_cols(trainData, x_train)
 
 # Merge together
 mergedData <- bind_rows(testData, trainData)
+
+#my_names <- names(mergedData)
+# Match all cases of std and mean
+#my_names[grep("subject|activity|mean|std", my_names, ignore.case = TRUE)]
+# No Angle means
+#my_names[grep("subject|activity|mean|std", my_names)]
+# only -std() or -mean()
+
+mergedData <- subset(mergedData, select = names(mergedData)[grep("subject|activity|mean|std", names(mergedData))])
+tidy <- melt(mergedData, id=c("subject","activity"))
+
+names(tidy) <- c("subject", "activity", "feature", "signal")
+
+tidy$activity <- mapvalues(tidy$activity, activities$id, activities$activity)
+
+
