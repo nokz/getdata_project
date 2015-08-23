@@ -48,5 +48,7 @@ as per the [Code Book](./CodeBook.md).
 
 ## Final Data Set 
 
+The script **outputs** the final tidy data set called `tidy.txt` to the working directory. 
+
 The text file from the submission page or the created with the script can be read into RStudio with the command 
 `read.table("tidy.txt", sep=" ", header = TRUE)`.

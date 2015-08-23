@@ -72,7 +72,6 @@ meanTidy <- tidy %>% group_by(subject, activity, feature) %>% summarise_each(fun
 # Label new column appropriately. 
 names(meanTidy) <- c("subject", "activity", "feature", "average")
 
-# Write tidy data set to tidy.txt
+# Output: Write tidy data set to tidy.txt
 write.table(meanTidy, "tidy.txt", row.names = FALSE)
-
 
