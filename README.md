@@ -7,7 +7,7 @@ the variables, and the data that `run_analysis.R` creates. `run_analysis.R` merg
 the measurements on the mean and standard deviation, use descriptive variables for activities and features, and creates a
 tidy data set with the average for each variable for each activity and each subject. 
 
-## Tidy Data
+## Tidy Data Explanation
 
 I chose to create the final tidy data set in a narrow form as per this [discussion](https://class.coursera.org/getdata-031/forum/thread?thread_id=113). 
 Having the columns: `subject`, `activity`, `feature` and `mean`, each variable is in one column, and each measurement is in a different row creating a tidy data set. 
@@ -39,9 +39,14 @@ The script can be run from RStudio or R console.
 2. Run the script with `source("run_analysis.R")`.
 3. The script creates a text file: `tidy.txt` which contains the final tidy data. 
 
+**Important:** `run_analysis.R` and the folder `UCI HAR Dataset` must be in the same directory. 
+
 ## Using the script
 
 You can view the data in R with the object `meanTidy`. This object has the four variables: subject, activity and mean 
 as per the [Code Book](./CodeBook.md). 
 
-Alternatively, you can read the created text file with the command `read.table("tidy.txt", sep=" ", header = TRUE)`.
+## Final Data Set 
+
+The text file from the submission page or the created with the script can be read into RStudio with the command 
+`read.table("tidy.txt", sep=" ", header = TRUE)`.

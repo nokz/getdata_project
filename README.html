@@ -67,9 +67,9 @@ img {
 <h2>Introduction</h2>
 <p>This repository contains the Getting and Cleaning Data Course Project. The <a href="./CodeBook.md">Code Book</a> describes the variables, and the data that <code>run_analysis.R</code> creates. <code>run_analysis.R</code> merges the training and test data, takes only the measurements on the mean and standard deviation, use descriptive variables for activities and features, and creates a tidy data set with the average for each variable for each activity and each subject.</p>
 </div>
-<div id="tidy-data" class="section level2">
-<h2>Tidy Data</h2>
-<p>I chose to create the final tidy data set in a narrow form as per this <a href="https://class.coursera.org/getdata-031/forum/thread?thread_id=113">discussion</a></p>
+<div id="tidy-data-explanation" class="section level2">
+<h2>Tidy Data Explanation</h2>
+<p>I chose to create the final tidy data set in a narrow form as per this <a href="https://class.coursera.org/getdata-031/forum/thread?thread_id=113">discussion</a>. Having the columns: <code>subject</code>, <code>activity</code>, <code>feature</code> and <code>mean</code>, each variable is in one column, and each measurement is in a different row creating a tidy data set.</p>
 <div id="measurements" class="section level3">
 <h3>Measurements</h3>
 <p>Chose to include meanFrequency (<code>meanFreq()</code>) measurements in the tidy data because it is a weighted <em>average</em> of the frequency components. Alternatively, chose to exclude measurements in <code>angle()</code> that refer to mean because the resulting measurment for these are angles.</p>
@@ -103,11 +103,15 @@ img {
 <li>Run the script with <code>source(&quot;run_analysis.R&quot;)</code>.</li>
 <li>The script creates a text file: <code>tidy.txt</code> which contains the final tidy data.</li>
 </ol>
+<p><strong>Important:</strong> <code>run_analysis.R</code> and the folder <code>UCI HAR Dataset</code> must be in the same directory.</p>
 </div>
 <div id="using-the-script" class="section level2">
 <h2>Using the script</h2>
 <p>You can view the data in R with the object <code>meanTidy</code>. This object has the four variables: subject, activity and mean as per the <a href="./CodeBook.md">Code Book</a>.</p>
-<p>Alternatively, you can read the created text file with the command <code>read.table(&quot;tidy.txt&quot;, sep=&quot; &quot;, header = TRUE)</code>.</p>
+</div>
+<div id="final-data-set" class="section level2">
+<h2>Final Data Set</h2>
+<p>The text file from the submission page or the created with the script can be read into RStudio with the command <code>read.table(&quot;tidy.txt&quot;, sep=&quot; &quot;, header = TRUE)</code>.</p>
 </div>
 </div>
 
