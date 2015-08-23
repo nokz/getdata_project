@@ -1,5 +1,6 @@
 # getdata course project
 
+library(plyr)
 library(dplyr)
 library(reshape2)
 
@@ -47,13 +48,29 @@ mergedData <- bind_rows(testData, trainData)
 #my_names[grep("subject|activity|mean|std", my_names, ignore.case = TRUE)]
 # No Angle means
 #my_names[grep("subject|activity|mean|std", my_names)]
-# only -std() or -mean()
 
+# Merge test and train data sets but only the subject, activity and measurements of mean and standard deviation. 
 mergedData <- subset(mergedData, select = names(mergedData)[grep("subject|activity|mean|std", names(mergedData))])
+
+# Activity IDs with activity name
+mergedData$activity <- mapvalues(mergedData$activity, activities$id, activities$activity)
+
+# Use descriptive variable names. 
+names(mergedData) <- gsub("tBody", "timeBody", names(mergedData))
+names(mergedData) <- gsub("Acc", "Acceleration", names(mergedData))
+names(mergedData) <- gsub("tGravity", "timeGravity", names(mergedData))
+names(mergedData) <- gsub("Mag", "Magnitude", names(mergedData))
+names(mergedData) <- gsub("fBody", "frequencyBody", names(mergedData))
+names(mergedData) <- gsub("Gyro", "Gyroscope", names(mergedData))
+names(mergedData) <- gsub("Freq", "Frequency", names(mergedData))
+names(mergedData) <- gsub("std", "standardDeviation", names(mergedData))
+
 tidy <- melt(mergedData, id=c("subject","activity"))
 
+# Rename our columns
 names(tidy) <- c("subject", "activity", "feature", "signal")
 
-tidy$activity <- mapvalues(tidy$activity, activities$id, activities$activity)
+meanTidy <- tidy %>% group_by(subject, activity, feature) %>% summarise_each(funs(mean))
+names(meanTidy) <- c("subject", "activity", "feature", "mean")
 
 
