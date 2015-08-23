@@ -63,10 +63,16 @@ tidy <- melt(mergedData, id=c("subject","activity"))
 # Rename our columns
 names(tidy) <- c("subject", "activity", "feature", "signal")
 
+# Change from factor to character
+tidy$feature <- as.character(tidy$feature)
+
 # Average each variable for each subject and each activity. 
 meanTidy <- tidy %>% group_by(subject, activity, feature) %>% summarise_each(funs(mean))
 
 # Label new column appropriately. 
-names(meanTidy) <- c("subject", "activity", "feature", "mean")
+names(meanTidy) <- c("subject", "activity", "feature", "average")
+
+# Write tidy data set to tidy.txt
+write.table(meanTidy, "tidy.txt", row.names = FALSE)
 
 
