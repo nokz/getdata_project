@@ -30,8 +30,6 @@ names(y_train)[1] <- "activity"
 
 names(activities) <- c("id", "activity")
 
-# bind_rows removes duplicate column names
-
 # Combine test data together
 testData <- bind_cols(subjectTest, y_test)
 testData <- bind_cols(testData, x_test)
@@ -40,16 +38,10 @@ testData <- bind_cols(testData, x_test)
 trainData <- bind_cols(subjectTrain, y_train)
 trainData <- bind_cols(trainData, x_train)
 
-# Merge together
+# Merge raw test and train data together. 
 mergedData <- bind_rows(testData, trainData)
 
-#my_names <- names(mergedData)
-# Match all cases of std and mean
-#my_names[grep("subject|activity|mean|std", my_names, ignore.case = TRUE)]
-# No Angle means
-#my_names[grep("subject|activity|mean|std", my_names)]
-
-# Merge test and train data sets but only the subject, activity and measurements of mean and standard deviation. 
+# Select subject, activity and columns that are measurements of on the mean and standard deviation. 
 mergedData <- subset(mergedData, select = names(mergedData)[grep("subject|activity|mean|std", names(mergedData))])
 
 # Activity IDs with activity name
@@ -65,12 +57,16 @@ names(mergedData) <- gsub("Gyro", "Gyroscope", names(mergedData))
 names(mergedData) <- gsub("Freq", "Frequency", names(mergedData))
 names(mergedData) <- gsub("std", "standardDeviation", names(mergedData))
 
+# Moves the columns of measurements into a single column. Wide data to narrow data. 
 tidy <- melt(mergedData, id=c("subject","activity"))
 
 # Rename our columns
 names(tidy) <- c("subject", "activity", "feature", "signal")
 
+# Average each variable for each subject and each activity. 
 meanTidy <- tidy %>% group_by(subject, activity, feature) %>% summarise_each(funs(mean))
+
+# Label new column appropriately. 
 names(meanTidy) <- c("subject", "activity", "feature", "mean")
 
 
