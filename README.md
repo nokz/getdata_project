@@ -3,7 +3,19 @@
 ## Introduction
 
 This repository contains the Getting and Cleaning Data Course Project. The [Code Book](./CodeBook.md) describes 
-the variables, and the data that `run_analysis.R` creates. 
+the variables, and the data that `run_analysis.R` creates. `run_analysis.R` merges the training and test data, takes only 
+the measurements on the mean and standard deviation, use descriptive variables for activities and features, and creates a
+tidy data set with the average for each variable for each activity and each subject. 
+
+## Tidy Data
+
+I chose to create the final tidy data set in a narrow form as per this [discussion](https://class.coursera.org/getdata-031/forum/thread?thread_id=113). 
+Having the columns: `subject`, `activity`, `feature` and `mean`, each variable is in one column, and each measurement is in a different row creating a tidy data set. 
+
+### Measurements
+Chose to include meanFrequency (`meanFreq()`) measurements in the tidy data because it is a weighted *average* of the frequency components. 
+Alternatively, chose to exclude measurements in `angle()` that refer to mean because the resulting measurment for these are angles. 
+
 ## Requirements
 
 ### Required Libraries
